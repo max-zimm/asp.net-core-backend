@@ -1,14 +1,16 @@
-﻿using Restaurants.Domain.Entities;
+﻿using Microsoft.Extensions.Logging;
+using Restaurants.Domain.Entities;
+using Restaurants.Domain.Repository;
 namespace Restaurants.Application.Restaurants;
 
-internal class RestaurauntsService
+internal class RestaurauntsService(IRestaurantsRepository restaurantsRepository, ILogger<RestaurauntsService> logger) : IRestaurauntsService
 {
 
-    public Task<IEnumerable<Restaurant>> GetAllRestaurants()
+    public async Task<IEnumerable<Restaurant>> GetAllRestaurants()
     {
-        // This is a placeholder for the actual implementation.
-        // In a real application, you would retrieve the list of restaurants from a database or service.
-        return Task.FromResult<IEnumerable<Restaurant>>(new List<Restaurant>());
+        logger.LogInformation("Fetching all restaurants from the repository.");
+
+        return await restaurantsRepository.GetAllAsync();
 
     }
 }
